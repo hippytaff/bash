@@ -10,12 +10,13 @@
 file=
 verbose=0
 
+# Functions
 # Always check for wl driver, install and load if not found.
 wless(){
     wlchk="$(lsmod | grep wl)"
     if [ -z "$wlchk" ]; then
 
-	sudo apt-get install -y bcmwl-kernel-source 
+	sudo apt-get install -y bcmwl-kernel-source
 	sudo modprobe -r ssb wl brcmfmac brcmsmac bcma
 	sudo modprobe wl
 
@@ -28,20 +29,21 @@ exit
 prflcode(){
 	wless
 	sudo apt-get install -y git-all
-	echo "Coding environment ready"
+	echo "Coding environment ready..."
 exit
 }
 
 prfltest(){
 	wless
 	sudo apt-get update && sudo apt get dist upgrade
-	echo "testing environment ready"
+	echo "testing environment ready..."
 exit
 }
 
 prflstnd(){
 	wless
 	sudo apt-get install -y transmission irssi
+	echo "Standard environment ready..."
 exit
 }
 
@@ -61,11 +63,11 @@ help(){
 exit
 }
 
-# Main function to loop over args (do log file std/errout)
+# Loop over args (todo log file std/errout)
 
 while :; do
     case $1 in
-	-c|-\?|--coding) 	# Call coding profiles
+	-c|-\?|--coding)
 	prflcode
 	echo "Setting up coding environment..."
 	exit
