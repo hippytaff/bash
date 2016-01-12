@@ -1,7 +1,7 @@
 #!/bin/bash
 # Script to setup my prefered environment from first boot or live environment
 # 12/01/16
-#
+#________________________________________________________________________________
 # Descripton
 # Sets up initial stuff and sets up profiles according to user input.
 
