@@ -10,43 +10,6 @@
 file=
 verbose=0
 
-# Main function to loop over args (do log file std/errout)
-
-main()	{
-
-while :; do
-    case $1 in
-	-c|-\?|--coding) 	# Call coding profiles
-	prflcode
-	echo "Setting up coding environment..."
-	exit
-	;;
-	-t|-\?|--testing)
-	prfltest
-	echo "Setting up testing environment..."
-	exit
-	;;
-	-s|-\?|--standard)
-	pflstnd
-	echo "Setting up testing environment..."
-	exit
-	;;
-	-h|-\?|--help)
-	help
-	exit
-	;;
-	*)
-	help
-	exit
-	;;
-	-?*)
-	help
-	exit
-	break
-    esac
-done
-}
-
 # Always check for wl driver, install and load if not found.
 wless(){
     wlchk="$(lsmod | grep wl)"
@@ -85,7 +48,6 @@ exit
 help(){
 	cat <<- EOF
 
-
 	USAGE:
 	./leficonfig.sh [ARG] -h | --help
 
@@ -99,6 +61,37 @@ help(){
 exit
 }
 
-# Start
-main
+# Main function to loop over args (do log file std/errout)
+
+while :; do
+    case $1 in
+	-c|-\?|--coding) 	# Call coding profiles
+	prflcode
+	echo "Setting up coding environment..."
+	exit
+	;;
+	-t|-\?|--testing)
+	prfltest
+	echo "Setting up testing environment..."
+	exit
+	;;
+	-s|-\?|--standard)
+	pflstnd
+	echo "Setting up testing environment..."
+	exit
+	;;
+	-h|-\?|--help)
+	help
+	exit
+	;;
+	*)
+	help
+	exit
+	;;
+	-?*)
+	help
+	exit
+	break
+    esac
+done
 
