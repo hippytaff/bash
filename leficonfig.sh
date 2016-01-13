@@ -10,44 +10,69 @@
 file=
 verbose=0
 
-# Functions
-# Always check for wl driver, install and load if not found.
-wless(){
-    wlchk="$(lsmod | grep wl)"
-    if [ -z "$wlchk" ]; then
+# Vars
+chkgit="$(which git)"
+chkstndi="$(which irssi)"		# Need to do an array for these, so only one test
+chkstndt="$(which transmission)"	# +in pflstnd()
+chkseed="$(which transmission)"
+chkwl="$(lsmod | grep wl)"
+chkenv="$(which swarmi)" 		# Check if works...bad test anyway, must be a better way
 
+
+# Functions
+# Always check for wl driver, install and load if not found. wless should go first-todo
+wless(){
+	echo "Checking wireless..."
+    if [ -z "$chkwl" ]; then
+	echo "installing and loading wl wirelss driver..."
 	sudo apt-get install -y bcmwl-kernel-source
 	sudo modprobe -r ssb wl brcmfmac brcmsmac bcma
 	sudo modprobe wl
-
+#Sanity check wl installed here
+        echo "wl loaded"
     else
-	echo "wl loaded..."
+	echo "wl loaded"
     fi
 exit
 }
 
 prflcode(){
-	wless
+    if [ -z "$chkgit" ]; then
+	echo "Setting up coding environment..."
 	sudo apt-get install -y git-all
+	echo "Good to go"
+    else
 	echo "Coding environment ready..."
+    fi
+wless
 exit
 }
 
 prfltest(){
-	wless
+    if [ -z "$chkenv" ]; then
+	echo "Setting up testing profile..."
 	sudo apt-get update && sudo apt get dist upgrade
+	echo "Good to go"
+    else
 	echo "testing environment ready..."
+    fi
+wless
 exit
 }
 
-prflstnd(){
-	wless
+pflstnd(){
+    if [ -z "$chkstndi" ] || [ -z "$chkstndt" ]; then
+	echo "Setting up standard profile..."
 	sudo apt-get install -y transmission irssi
+	echo "Good to go"
+    else
 	echo "Standard environment ready..."
+    fi
+#wless
 exit
 }
 
-help(){
+hlptxt(){
 	cat <<- EOF
 
 	USAGE:
@@ -69,29 +94,26 @@ while :; do
     case $1 in
 	-c|-\?|--coding)
 	prflcode
-	echo "Setting up coding environment..."
 	exit
 	;;
 	-t|-\?|--testing)
 	prfltest
-	echo "Setting up testing environment..."
 	exit
 	;;
 	-s|-\?|--standard)
 	pflstnd
-	echo "Setting up testing environment..."
 	exit
 	;;
 	-h|-\?|--help)
-	help
+	hlptxt
 	exit
 	;;
 	*)
-	help
+	hlptxt
 	exit
 	;;
 	-?*)
-	help
+	hlptxt
 	exit
 	break
     esac
