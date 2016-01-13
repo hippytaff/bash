@@ -13,6 +13,7 @@
 # - Need arrays for standard() checks
 # - Really the wireless wl install should go first before other funcs
 # - update .bashrc
+# - check for root - why do I keep forgetting that????
 # Global stuff
 
 file=
