@@ -52,7 +52,7 @@ prfltest(){
     if [ -z "$chkenv" ]; then
 	echo "Setting up testing profile..."
 	# Need to  update sources.list with unstable here
-	sudo apt-get update && sudo apt get dist-upgrade
+	sudo apt-get update && sudo apt-get dist-upgrade
     else
 	echo "testing environment ready..."
     fi
