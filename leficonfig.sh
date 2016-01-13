@@ -1,12 +1,12 @@
 #!/bin/bash
 #_______________________________________________________________________________________________________
-# Descripton:												|
-# Sets up initial stuff and sets up profiles according to user input for Bodhi				|
-# to automate my preferred set-up in a live environment or fresh install (lefi)				|
-#													|
-# Author:												|
-# Hippytaff 21/01/16											|
-#_______________________________________________________________________________________________________|
+# Descripton:
+# Sets up initial stuff and sets up profiles according to user input for Bodhi
+# to automate my preferred set-up in a live environment or fresh install (lefi)
+#
+# Author:
+# Hippytaff 21/01/16
+#_______________________________________________________________________________________________________
 # To Do:
 # - Testing() needs some love. replace main with unstable in source.list mainly
 # - Swarmi test isnt' gonna work. Obvs
@@ -14,7 +14,8 @@
 # - Really the wireless wl install should go first before other funcs
 # - update .bashrc
 # - check for root - why do I keep forgetting that????
-# Global stuff
+#_______________________________________________________________________________________________________
+#Global stuff
 
 file=
 verbose=0
@@ -97,7 +98,7 @@ hlptxt(){
 exit
 }
 
-# Loop over args (todo log file std/errout)
+# Loop over args (todo log file std/errout) # To do Check for root first
 
 while :; do
     case $1 in
