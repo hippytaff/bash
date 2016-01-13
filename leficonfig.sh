@@ -14,10 +14,10 @@ verbose=0
 chkgit="$(which git)"
 chkstndi="$(which irssi)"		# Need to do an array for these, so only one test
 chkstndt="$(which transmission)"	# +in pflstnd()
-chkseed="$(which transmission)"
 chkwl="$(lsmod | grep wl)"
 chkenv="$(which swarmi)" 		# Check if works...bad test anyway, must be a better way
-
+#srclist="$(sources.list)"		# change path back after tests
+#srclist-backup="$~sources.list"
 
 # Functions
 # Always check for wl driver, install and load if not found. wless should go first-todo
@@ -28,7 +28,7 @@ wless(){
 	sudo apt-get install -y bcmwl-kernel-source
 	sudo modprobe -r ssb wl brcmfmac brcmsmac bcma
 	sudo modprobe wl
-#Sanity check wl installed here
+#Make sure wl installed here
         echo "wl loaded"
     else
 	echo "wl loaded"
@@ -51,8 +51,8 @@ exit
 prfltest(){
     if [ -z "$chkenv" ]; then
 	echo "Setting up testing profile..."
-	sudo apt-get update && sudo apt get dist upgrade
-	echo "Good to go"
+	# Need to  update sources.list with unstable here
+	sudo apt-get update && sudo apt get dist-upgrade
     else
 	echo "testing environment ready..."
     fi
@@ -61,14 +61,14 @@ exit
 }
 
 pflstnd(){
-    if [ -z "$chkstndi" ] || [ -z "$chkstndt" ]; then
+    if [ -z "$chkstndi" ] && [ -z "$chkstndt" ]; then # This is broken, need to research && || conditions
 	echo "Setting up standard profile..."
 	sudo apt-get install -y transmission irssi
 	echo "Good to go"
     else
 	echo "Standard environment ready..."
     fi
-#wless
+wless
 exit
 }
 
