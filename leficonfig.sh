@@ -12,7 +12,7 @@
 # - Swarmi test isnt' gonna work. Obvs
 # - Need arrays for standard() checks
 # - Really the wireless wl install should go first before other funcs
-#
+# - update .bashrc
 # Global stuff
 
 file=
