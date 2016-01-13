@@ -1,10 +1,18 @@
 #!/bin/bash
-# Script to setup my prefered environment from first boot or live environment
-# 12/01/16
-#________________________________________________________________________________
-# Descripton
-# Sets up initial stuff and sets up profiles according to user input.
-
+#_______________________________________________________________________________________________________
+# Descripton:												|
+# Sets up initial stuff and sets up profiles according to user input for Bodhi				|
+# to automate my preferred set-up in a live environment or fresh install (lefi)				|
+#													|
+# Author:												|
+# Hippytaff 21/01/16											|
+#_______________________________________________________________________________________________________|
+# To Do:
+# - Testing() needs some love. replace main with unstable in source.list mainly
+# - Swarmi test isnt' gonna work. Obvs
+# - Need arrays for standard() checks
+# - Really the wireless wl install should go first before other funcs
+#
 # Global stuff
 
 file=
