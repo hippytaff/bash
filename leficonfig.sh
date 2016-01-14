@@ -22,13 +22,16 @@ verbose=0
 
 # Vars
 chkroot="$(whoami)"
-chkgit="$(which git)"
+chkgit="$(which gitt)"
 chkstndi="$(which irssi)"		# Need to do an array for these, so only one test
 chkstndt="$(which transmission)"	# +in pflstnd()
 chkwl="$(lsmod | grep wl)"
 chkenv=			 		# How to check for bodhi version?
 #srclist="$(sources.list)"		# change path back after tests
 #srclist-backup="$~sources.list"
+
+# Arrays
+installed=("$chkstndi" "$chkstndt" "$chkgit")
 
 # Funcs
 # Always check for wl driver, install and load if not found. wless should go first-todo
@@ -49,10 +52,8 @@ wless(){
 }
 
 prflcode(){
-    if [ -z "$chkgit" ]; then
-	echo "Setting up coding environment..."
+    if [ -z "${installed[2]}" ]; then
 	sudo apt-get install -y git-all
-	echo "Good to go"
     else
 	echo "Coding environment ready..."
     fi
@@ -73,7 +74,7 @@ exit
 }
 
 pflstnd(){
-    if [ -z "$chkstndi" ] && [ -z "$chkstndt" ]; then # This is broken, need to research && || conditions
+    if [ -z "${installed[0]}" ] && [ -z "${installed[1]}" ]; then # This is broken, need to research && || conditions
 	echo "Setting up standard profile..."
 	sudo apt-get install -y transmission irssi
 	echo "Good to go"
