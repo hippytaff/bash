@@ -9,11 +9,11 @@
 #_______________________________________________________________________________________________________
 # To Do:
 # - Testing() needs some love. replace main with unstable in source.list mainly
-# - Swarmi test isnt' gonna work. Obvs
+# - Swarmi test isnt' gonna work. Obvs...how to test bodhi version?
 # - Need arrays for standard() checks
-# - Really the wireless wl install should go first before other funcs
-# - update .bashrc
-# - check for root - why do I keep forgetting that????
+# - Really the wireless wl install should go first before all other funcs
+# - create my .bashrc, sources.list, .irssi, git...(other programme configs)
+# - my moksha set-up (tzdata, keybindings...)
 #_______________________________________________________________________________________________________
 #Global stuff
 
@@ -21,15 +21,16 @@ file=
 verbose=0
 
 # Vars
+chkroot="$(whoami)"
 chkgit="$(which git)"
 chkstndi="$(which irssi)"		# Need to do an array for these, so only one test
 chkstndt="$(which transmission)"	# +in pflstnd()
 chkwl="$(lsmod | grep wl)"
-chkenv="$(which swarmi)" 		# Check if works...bad test anyway, must be a better way
+chkenv=			 		# How to check for bodhi version?
 #srclist="$(sources.list)"		# change path back after tests
 #srclist-backup="$~sources.list"
 
-# Functions
+# Funcs
 # Always check for wl driver, install and load if not found. wless should go first-todo
 wless(){
 	echo "Checking wireless..."
@@ -38,12 +39,13 @@ wless(){
 	sudo apt-get install -y bcmwl-kernel-source
 	sudo modprobe -r ssb wl brcmfmac brcmsmac bcma
 	sudo modprobe wl
-#Make sure wl installed here
-        echo "wl loaded"
-    else
-	echo "wl loaded"
+
+	    if [ -z "$chkwl" ]; then
+		echo "wl failed to install..."
+	    else
+        	echo "wl loaded..."
+	    fi
     fi
-exit
 }
 
 prflcode(){
@@ -100,6 +102,14 @@ exit
 
 # Loop over args (todo log file std/errout) # To do Check for root first
 
+# check we are root.
+if [ "$chkroot" != "root" ]; then
+    echo
+    echo "Needs to be run as root..."
+    hlptxt
+    exit 1
+else
+
 while :; do
     case $1 in
 	-c|-\?|--coding)
@@ -128,4 +138,4 @@ while :; do
 	break
     esac
 done
-
+fi
