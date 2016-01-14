@@ -31,19 +31,19 @@ chkenv=			 		# How to check for bodhi version?
 #srclist-backup="$~sources.list"
 
 # Arrays
-installed=("$chkstndi" "$chkstndt" "$chkgit")
+installed=("$chkstndi" "$chkstndt" "$chkgit" "$chkwl")
 
 # Funcs
 # Always check for wl driver, install and load if not found. wless should go first-todo
 wless(){
 	echo "Checking wireless..."
-    if [ -z "$chkwl" ]; then
+    if [ -z "${installed[3]}" ]; then
 	echo "installing and loading wl wirelss driver..."
 	sudo apt-get install -y bcmwl-kernel-source
 	sudo modprobe -r ssb wl brcmfmac brcmsmac bcma
 	sudo modprobe wl
 
-	    if [ -z "$chkwl" ]; then
+	    if [ -z "${installed[3]}" ]; then
 		echo "wl failed to install..."
 	    else
         	echo "wl loaded..."
@@ -74,11 +74,12 @@ exit
 }
 
 pflstnd(){
-    if [ -z "${installed[0]}" ] && [ -z "${installed[1]}" ]; then # This is broken, need to research && || conditions
+    if [ -z "${installed[0]}" || -z "${installed[1]}" ]; then # Need to research && || conditions. this will do for now.
 	echo "Setting up standard profile..."
-	sudo apt-get install -y transmission irssi
+	sudo apt-get install -y transmission
+	sudo apt-get install -y irssi
+	    else
 	echo "Good to go"
-    else
 	echo "Standard environment ready..."
     fi
 wless
