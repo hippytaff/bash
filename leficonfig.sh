@@ -27,7 +27,7 @@ chkstndi="$(which irssi)"		# Need to do an array for these, so only one test
 chkstndt="$(which transmission)"	# +in pflstnd()
 chkwl="$(lsmod | grep wl)"
 chkenv=			 		# How to check for bodhi version?
-#srclist="$(sources.list)"		# change path back after tests
+#srclist="$(sources.list)"		# How to edit sources.list? grep/awk/sed expression
 #srclist-backup="$~sources.list"
 
 # Arrays
@@ -54,8 +54,12 @@ wless(){
 prflcode(){
     if [ -z "${installed[2]}" ]; then
 	sudo apt-get install -y git-all
-    else
+	    if [ -z "${installed}[2]" ]; then
+		echo "Failed to install git...aborted..."
+	    	exit 1
+	    else
 	echo "Coding environment ready..."
+    	    fi
     fi
 wless
 exit
@@ -63,11 +67,14 @@ exit
 
 prfltest(){
     if [ -z "$chkenv" ]; then
-	echo "Setting up testing profile..."
 	# Need to  update sources.list with unstable here
 	sudo apt-get update && sudo apt-get dist-upgrade
-    else
+    	if [ -z "$chkenv" ]; then
+		echo "Failed to install...aborted..."
+	    exit 1
+	    else
 	echo "testing environment ready..."
+	fi
     fi
 wless
 exit
@@ -78,8 +85,7 @@ pflstnd(){
 	echo "Setting up standard profile..."
 	sudo apt-get install -y transmission
 	sudo apt-get install -y irssi
-	    else
-	echo "Good to go"
+	else
 	echo "Standard environment ready..."
     fi
 wless
@@ -102,8 +108,7 @@ hlptxt(){
 exit
 }
 
-# Loop over args (todo log file std/errout) # To do Check for root first
-
+# Start
 # check we are root.
 if [ "$chkroot" != "root" ]; then
     echo
@@ -112,6 +117,7 @@ if [ "$chkroot" != "root" ]; then
     exit 1
 else
 
+# Loop over args (todo: log file std/errout)
 while :; do
     case $1 in
 	-c|-\?|--coding)
