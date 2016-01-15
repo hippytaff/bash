@@ -1,4 +1,6 @@
 #!/bin/bash
+# build script for terminology - https://www.enlightenment.org/docs-efl-start
+
 # Basic
 sudo apt-get install git autoconf automake autopoint libtool gettext
 
@@ -24,3 +26,8 @@ export CFLAGS="-0.3 -ffast-math -march-native"
 # efl (>= 1.8.0)
 # elementary (>= 1.8.0)
 # terminology
+
+# Note: to make terminology work with input methods in general you need:
+#
+# export ECORE_IMF_MODULE="xim"
+# export XMODIFIERS="@im=none"
