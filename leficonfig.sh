@@ -52,9 +52,9 @@ wless(){
 }
 
 # Todo see build-env-sh
-prflcode(){
+prflbuild(){
     if [ -z "${installed[2]}" ]; then
-	sudo apt-get install -y git-all
+	./build.sh
 	    if [ -z "${installed}[2]" ]; then
 		echo "Failed to install git...aborted..."
 	    	exit 1
@@ -69,7 +69,7 @@ exit
 prfltest(){
     if [ -z "$chkenv" ]; then
 	# Need to  update sources.list with unstable here
-	sudo apt-get update && sudo apt-get dist-upgrade
+	# list applications
     	if [ -z "$chkenv" ]; then
 		echo "Failed to install...aborted..."
 	    exit 1
@@ -100,7 +100,7 @@ hlptxt(){
 	./leficonfig.sh [ARG] -h | --help
 
 	ARGS:
-	-c | --coding	   setup coding env
+	-b | --build	   setup build env
 	-t | --testing	   setup testing env
 	-s | --standard	   setup standard env
 	-h | --help	   this help menu
@@ -121,8 +121,8 @@ else
 # Loop over args (todo: log file std/errout)
 while :; do
     case $1 in
-	-c|-\?|--coding)
-	prflcode
+	-b|-\?|--build)
+	prflbuild
 	exit
 	;;
 	-t|-\?|--testing)
