@@ -1,7 +1,7 @@
 #!/bin/bash
 # build script for terminology - https://www.enlightenment.org/docs-efl-start
 
-# Debug
+# Debug tools
 # sudo apt-get install gdb valgrind perf
 
 # install build tools
